@@ -15,12 +15,8 @@ class Snake:
         self.head = self.list_of_turtles[0]
 
     def create_snake(self):
-        for i in STARTING_POS:
-            new_turtle = Turtle(shape="square")
-            new_turtle.color("white")
-            new_turtle.penup()
-            new_turtle.goto(i)
-            self.list_of_turtles.append(new_turtle)
+        for pos in STARTING_POS:
+            self.add_segment(pos)
 
     def move(self):
         for seg in range(len(self.list_of_turtles) - 1, 0, -1):  # blocks to copy previous block
@@ -28,6 +24,16 @@ class Snake:
             new_y = self.list_of_turtles[seg - 1].ycor()
             self.list_of_turtles[seg].goto(new_x, new_y)
         self.head.forward(MOVE_DISTANCE)
+
+    def add_segment(self, pos):
+        new_turtle = Turtle(shape="square")
+        new_turtle.color("white")
+        new_turtle.penup()
+        new_turtle.goto(pos)
+        self.list_of_turtles.append(new_turtle)
+
+    def extend(self):
+        self.add_segment(self.list_of_turtles[-1].position())
 
     def up(self):
         if self.head.heading() != DOWN:
